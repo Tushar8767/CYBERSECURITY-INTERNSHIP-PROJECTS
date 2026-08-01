@@ -1,4 +1,4 @@
-# Project 03 – Web Application Security
+#  Web Application Security
 ### Vulnerability Assessment & Professional Reporting
 
 ![Platform](https://img.shields.io/badge/Platform-PortSwigger%20Web%20Security%20Academy-red)
