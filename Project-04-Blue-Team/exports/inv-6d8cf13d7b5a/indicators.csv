@@ -1,0 +1,7 @@
+indicator,indicator_type,first_seen,last_seen,event_count,related_alerts,related_incident,classification,analyst_notes
+10.0.0.15,IPv4,2026-03-09T06:14:00,2026-03-10T20:14:00,19,[],,Contextual,
+logrotate.conf,Domain,2026-03-09T07:10:00,2026-03-10T18:52:00,66,[],,Contextual,
+192.0.2.99,IPv4,2026-03-10T03:20:04,2026-03-10T03:40:12,12,[],,Contextual,
+http://192.0.2.99/update.sh,URL,2026-03-10T03:20:04,2026-03-10T03:40:11,6,[],,Contextual,
+update.sh,Domain,2026-03-10T03:20:04,2026-03-10T03:40:11,6,[],,Contextual,
+tar.gz,Domain,2026-03-10T03:23:10,2026-03-10T03:23:10,1,[],,Contextual,
