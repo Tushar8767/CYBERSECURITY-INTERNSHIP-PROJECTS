@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ReconForge Reconnaissance Report
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #f5f7fa;
+            --surface: #ffffff;
+            --text: #17202a;
+            --muted: #667085;
+            --border: #e4e7ec;
+
+            --primary: #087f5b;
+
+            --high: #c92a2a;
+            --medium: #e67700;
+            --low: #1971c2;
+            --info: #667085;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+
+        .report {
+            max-width: 1180px;
+
+            margin: 30px auto;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        /* Cover */
+
+        .cover {
+            min-height: 450px;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 70px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #071510,
+                    #0d2b20
+                );
+
+            color: white;
+        }
+
+        .cover-label {
+            color: #69dbb5;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .cover h1 {
+            margin:
+                18px 0 5px;
+
+            font-size: 46px;
+        }
+
+        .cover h2 {
+            font-size: 23px;
+
+            font-weight: normal;
+
+            margin: 0;
+
+            color: #d3f9e8;
+        }
+
+        .cover-target {
+            margin-top: 50px;
+
+            border-left:
+                4px solid #69dbb5;
+
+            padding-left: 18px;
+        }
+
+        .cover-target span {
+            display: block;
+
+            color: #b7d8cc;
+
+            font-size: 12px;
+        }
+
+        .cover-target strong {
+            font-size: 22px;
+        }
+
+
+        /* Content */
+
+        .content {
+            padding: 45px 55px;
+        }
+
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 23px;
+
+            border-bottom:
+                2px solid var(--primary);
+
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 17px;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+
+        /* Summary */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .summary-card {
+            border:
+                1px solid var(--border);
+
+            border-radius: 7px;
+
+            padding: 16px;
+
+            background: #fafafa;
+        }
+
+        .summary-card span {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+        }
+
+        .summary-card strong {
+            display: block;
+
+            margin-top: 6px;
+
+            font-size: 25px;
+        }
+
+
+        /* Tables */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border:
+                1px solid var(--border);
+
+            padding: 10px 12px;
+
+            vertical-align: top;
+
+            text-align: left;
+
+            word-break: break-word;
+        }
+
+        th {
+            background: #f2f4f7;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* Status */
+
+        .status {
+            display: inline-block;
+
+            padding: 3px 8px;
+
+            border-radius: 12px;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+        }
+
+        .success {
+            color: #087f5b;
+
+            background: #d3f9e8;
+        }
+
+        .partial {
+            color: #e67700;
+
+            background: #fff3bf;
+        }
+
+        .failed {
+            color: #c92a2a;
+
+            background: #ffe3e3;
+        }
+
+        .skipped {
+            color: #667085;
+
+            background: #f2f4f7;
+        }
+
+
+        /* Severity */
+
+        .severity {
+            font-weight: bold;
+        }
+
+        .severity-high {
+            color: var(--high);
+        }
+
+        .severity-medium {
+            color: var(--medium);
+        }
+
+        .severity-low {
+            color: var(--low);
+        }
+
+        .severity-informational {
+            color: var(--info);
+        }
+
+
+        /* Findings */
+
+        .finding {
+            border:
+                1px solid var(--border);
+
+            border-left:
+                4px solid var(--border);
+
+            border-radius: 6px;
+
+            padding: 16px;
+
+            margin-bottom: 14px;
+
+            page-break-inside: avoid;
+        }
+
+        .finding-high {
+            border-left-color: var(--high);
+        }
+
+        .finding-medium {
+            border-left-color: var(--medium);
+        }
+
+        .finding-low {
+            border-left-color: var(--low);
+        }
+
+        .finding-informational {
+            border-left-color: var(--info);
+        }
+
+        .finding-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .finding-header h3 {
+            margin: 0;
+        }
+
+        .finding p {
+            margin:
+                9px 0 0;
+        }
+
+        .finding-label {
+            font-weight: bold;
+        }
+
+
+        /* Technical blocks */
+
+        .technical-block {
+            background: #f8f9fa;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 5px;
+
+            padding: 13px;
+
+            font-family:
+                Consolas,
+                monospace;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+
+        /* Footer */
+
+        footer {
+            border-top:
+                1px solid var(--border);
+
+            padding: 25px 55px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        /* PDF */
+
+        @page {
+            size: A4;
+
+            margin: 16mm;
+        }
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .report {
+                border: none;
+
+                margin: 0;
+
+                max-width: none;
+            }
+
+            .cover {
+                min-height: 250mm;
+
+                page-break-after: always;
+            }
+
+            section {
+                page-break-inside: auto;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="report">
+
+
+    <!-- COVER -->
+
+    <div class="cover">
+
+        <div class="cover-label">
+            Authorized Security Reconnaissance
+        </div>
+
+        <h1>
+            ReconForge
+        </h1>
+
+        <h2>
+            Web Reconnaissance Report
+        </h2>
+
+
+        <div class="cover-target">
+
+            <span>
+                ASSESSED TARGET
+            </span>
+
+            <strong>
+                {{ target.hostname or "Unknown Target" }}
+            </strong>
+
+        </div>
+
+
+        <p style="margin-top: 35px; color: #b7d8cc;">
+
+            Generated:
+            {{ scan.generated_at }}
+
+        </p>
+
+    </div>
+
+
+    <div class="content">
+
+
+        <!-- AUTHORIZATION -->
+
+        <section>
+
+            <h2>
+                1. Scope & Authorization
+            </h2>
+
+            <p>
+
+                This report contains reconnaissance information
+                collected by ReconForge against an explicitly
+                authorized target.
+
+            </p>
+
+            <p>
+
+                ReconForge performs low-impact reconnaissance and
+                configuration analysis. Findings in this report
+                should not automatically be interpreted as confirmed
+                exploitable vulnerabilities.
+
+            </p>
+
+        </section>
+
+
+        <!-- EXECUTIVE SUMMARY -->
+
+        <section>
+
+            <h2>
+                2. Executive Summary
+            </h2>
+
+            <p>
+
+                ReconForge collected publicly available domain,
+                DNS, network, HTTP, TLS, robots.txt and sitemap
+                information for the assessed target.
+
+            </p>
+
+            <p>
+
+                Security configuration observations were generated
+                where applicable and should be manually validated
+                before remediation decisions are made.
+
+            </p>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <span>
+                        Modules
+                    </span>
+
+                    <strong>
+                        {{ scan.module_summary.total or 0 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Observations
+                    </span>
+
+                    <strong>
+                        {{ scan.total_observations or 0 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        High
+                    </span>
+
+                    <strong class="severity-high">
+                        {{ scan.severity_summary.High or 0 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Medium
+                    </span>
+
+                    <strong class="severity-medium">
+                        {{ scan.severity_summary.Medium or 0 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Low
+                    </span>
+
+                    <strong class="severity-low">
+                        {{ scan.severity_summary.Low or 0 }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TARGET -->
+
+        <section>
+
+            <h2>
+                3. Target Information
+            </h2>
+
+            <table>
+
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Original Input</td>
+                    <td>{{ target.original }}</td>
+                </tr>
+
+                <tr>
+                    <td>Hostname</td>
+                    <td>{{ target.hostname }}</td>
+                </tr>
+
+                <tr>
+                    <td>HTTPS URL</td>
+                    <td>{{ target.https_url }}</td>
+                </tr>
+
+                <tr>
+                    <td>HTTP URL</td>
+                    <td>{{ target.http_url }}</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+
+        <!-- MODULE STATUS -->
+
+        <section>
+
+            <h2>
+                4. Reconnaissance Module Status
+            </h2>
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Module</th>
+                    <th>Status</th>
+                    <th>Errors / Warnings</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for name, module in modules.items() %}
+
+                <tr>
+
+                    <td>
+                        {{ name }}
+                    </td>
+
+                    <td>
+
+                        <span class="status {{ module.status }}">
+
+                            {{ module.status }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {% if module.errors %}
+
+                            {% for error in module.errors %}
+
+                                <div>
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            None
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- WHOIS -->
+
+        {% if modules.whois.data %}
+
+        <section>
+
+            <h2>
+                5. WHOIS Information
+            </h2>
+
+            {% set data = modules.whois.data %}
+
+            <table>
+
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Domain</td>
+                    <td>{{ data.domain_name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Registrar</td>
+                    <td>{{ data.registrar or "Unavailable" }}</td>
+                </tr>
+
+                <tr>
+                    <td>Creation Date</td>
+                    <td>{{ data.creation_date or "Unavailable" }}</td>
+                </tr>
+
+                <tr>
+                    <td>Expiration Date</td>
+                    <td>{{ data.expiration_date or "Unavailable" }}</td>
+                </tr>
+
+                <tr>
+                    <td>DNSSEC</td>
+                    <td>{{ data.dnssec or "Unavailable" }}</td>
+                </tr>
+
+                <tr>
+                    <td>Registrant Country</td>
+                    <td>{{ data.registrant_country or "Unavailable" }}</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- DNS -->
+
+        {% if modules.dns.data %}
+
+        <section>
+
+            <h2>
+                6. DNS Records
+            </h2>
+
+            {% set records = modules.dns.data.records %}
+
+            <table>
+
+                <tr>
+                    <th>Record Type</th>
+                    <th>Values</th>
+                </tr>
+
+                {% for record_type, values in records.items() %}
+
+                <tr>
+
+                    <td>
+                        {{ record_type }}
+                    </td>
+
+                    <td>
+
+                        {% if values %}
+
+                            {% for value in values %}
+
+                                <div>
+                                    {{ value }}
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            No records detected
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- IP -->
+
+        {% if modules.ip.data %}
+
+        <section>
+
+            <h2>
+                7. IP & Network Information
+            </h2>
+
+
+            {% for item in modules.ip.data.results %}
+
+                <h3>
+                    {{ item.ip_address }}
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            {{ item.classification.version }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            {{ item.classification.public }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            {% if item.reverse_dns %}
+
+                                {{ item.reverse_dns.hostname }}
+
+                            {% else %}
+
+                                Unavailable
+
+                            {% endif %}
+
+                        </td>
+                    </tr>
+
+
+                    {% if item.geolocation.data %}
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            {{ item.geolocation.data.country }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            {{ item.geolocation.data.region }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            {{ item.geolocation.data.city }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            {{ item.geolocation.data.asn }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            {{ item.geolocation.data.organization }}
+                        </td>
+                    </tr>
+
+                    {% endif %}
+
+                </table>
+
+            {% endfor %}
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- HTTP -->
+
+        {% if modules.http.data %}
+
+        <section>
+
+            <h2>
+                8. HTTP Analysis
+            </h2>
+
+            {% set data = modules.http.data %}
+
+            <table>
+
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        {{ data.status_code }}
+                        {{ data.reason }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Final URL</td>
+                    <td>{{ data.final_url }}</td>
+                </tr>
+
+                <tr>
+                    <td>Response Time</td>
+                    <td>
+                        {{ data.response_time_ms }} ms
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Server</td>
+                    <td>
+                        {{ data.server or "Not disclosed" }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>X-Powered-By</td>
+                    <td>
+                        {{ data.x_powered_by or "Not disclosed" }}
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Response Headers
+            </h3>
+
+            <div class="technical-block">
+{% for key, value in data.headers.items() %}{{ key }}: {{ value }}
+{% endfor %}
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- TLS -->
+
+        {% if modules.tls.data %}
+
+        <section>
+
+            <h2>
+                9. TLS Certificate
+            </h2>
+
+            {% set data = modules.tls.data %}
+
+            <table>
+
+                <tr>
+                    <td>TLS Version</td>
+                    <td>{{ data.tls_version }}</td>
+                </tr>
+
+                <tr>
+                    <td>Common Name</td>
+                    <td>{{ data.common_name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Valid From</td>
+                    <td>{{ data.valid_from }}</td>
+                </tr>
+
+                <tr>
+                    <td>Valid Until</td>
+                    <td>{{ data.valid_until }}</td>
+                </tr>
+
+                <tr>
+                    <td>Days Remaining</td>
+                    <td>{{ data.days_remaining }}</td>
+                </tr>
+
+                <tr>
+                    <td>Certificate Status</td>
+                    <td>
+                        {{ data.certificate_status }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Cipher</td>
+
+                    <td>
+
+                        {{ data.cipher.name }}
+
+                        /
+
+                        {{ data.cipher.bits }} bits
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Subject Alternative Names
+            </h3>
+
+            <ul>
+
+                {% for san in data.subject_alt_names %}
+
+                <li>
+                    {{ san }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- ROBOTS -->
+
+        {% if modules.robots.data %}
+
+        <section>
+
+            <h2>
+                10. robots.txt
+            </h2>
+
+            {% set data = modules.robots.data %}
+
+            <p>
+                <strong>Exists:</strong>
+                {{ data.exists }}
+            </p>
+
+            <p>
+                <strong>Status Code:</strong>
+                {{ data.status_code }}
+            </p>
+
+
+            {% if data.exists %}
+
+                <h3>
+                    Disallowed Paths
+                </h3>
+
+                <ul>
+
+                    {% for path in data.parsed.disallow_paths %}
+
+                    <li>
+                        {{ path }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+
+                <h3>
+                    Sitemap References
+                </h3>
+
+                <ul>
+
+                    {% for sitemap in data.parsed.sitemaps %}
+
+                    <li>
+                        {{ sitemap }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- SITEMAP -->
+
+        {% if modules.sitemap.data %}
+
+        <section>
+
+            <h2>
+                11. Sitemap Analysis
+            </h2>
+
+            <p>
+
+                <strong>
+                    Sitemap Available:
+                </strong>
+
+                {{ modules.sitemap.data.exists }}
+
+            </p>
+
+            <p>
+
+                <strong>
+                    URLs Discovered:
+                </strong>
+
+                {{ modules.sitemap.data.total_urls }}
+
+            </p>
+
+
+            {% if modules.sitemap.data.urls %}
+
+            <h3>
+                Discovered URLs
+            </h3>
+
+            <div class="technical-block">
+
+{% for url in modules.sitemap.data.urls %}{{ url }}
+{% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+
+        <!-- FINDINGS -->
+
+        <section>
+
+            <h2>
+                12. Security Observations
+            </h2>
+
+
+            {% if observations %}
+
+                {% for observation in observations %}
+
+                <div
+                    class="
+                        finding
+                        finding-{{ observation.severity|lower }}
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            {{ observation.id }}
+
+                            —
+
+                            {{ observation.title }}
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-{{ observation.severity|lower }}
+                            "
+                        >
+
+                            {{ observation.severity }}
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        {{ observation.source_module }}
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        {{ observation.evidence }}
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        {{ observation.description }}
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        {{ observation.recommendation }}
+
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+
+            {% else %}
+
+                <p>
+                    No reconnaissance observations were generated.
+                </p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- LIMITATIONS -->
+
+        <section>
+
+            <h2>
+                13. Limitations
+            </h2>
+
+            <ul>
+
+                {% for limitation in limitations %}
+
+                <li>
+                    {{ limitation }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+
+        <!-- CONCLUSION -->
+
+        <section>
+
+            <h2>
+                14. Conclusion
+            </h2>
+
+            <p>
+
+                ReconForge completed automated reconnaissance
+                against the authorized target and consolidated
+                the collected information into this report.
+
+            </p>
+
+            <p>
+
+                Security observations should be manually reviewed
+                before they are classified as confirmed
+                vulnerabilities or used to make remediation
+                decisions.
+
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <footer>
+
+        ReconForge v1.0.0 —
+        Authorized Web Reconnaissance Framework
+
+        <br>
+
+        Generated:
+        {{ scan.generated_at }}
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

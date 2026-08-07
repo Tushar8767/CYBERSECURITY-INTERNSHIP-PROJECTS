@@ -1,0 +1,738 @@
+{
+    "tool": {
+        "name": "ReconForge",
+        "version": "1.0.0",
+        "description": "Authorized Web Reconnaissance Framework"
+    },
+    "scan": {
+        "generated_at": "2026-08-07T16:28:04.510658+00:00",
+        "target": {
+            "original": "hello.com",
+            "hostname": "hello.com",
+            "https_url": "https://hello.com",
+            "http_url": "http://hello.com",
+            "input_scheme": "https",
+            "is_ip": false
+        },
+        "module_summary": {
+            "total": 8,
+            "success": 8,
+            "partial": 0,
+            "failed": 0,
+            "skipped": 0,
+            "unknown": 0
+        },
+        "total_observations": 10,
+        "severity_summary": {
+            "High": 0,
+            "Medium": 4,
+            "Low": 6,
+            "Informational": 0
+        }
+    },
+    "observations": [
+        {
+            "title": "TLS certificate approaching expiry",
+            "severity": "Medium",
+            "evidence": "Certificate expires in 24 day(s).",
+            "recommendation": "Schedule certificate renewal before expiration.",
+            "id": "RF-001",
+            "source_module": "tls"
+        },
+        {
+            "id": "RF-002",
+            "title": "Content-Security-Policy header not detected",
+            "severity": "Medium",
+            "evidence": "Missing HTTP response header: Content-Security-Policy",
+            "description": "Helps restrict which scripts, styles, images, and other resources the browser is allowed to load.",
+            "recommendation": "Implement and test a restrictive Content-Security-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-003",
+            "title": "Strict-Transport-Security header not detected",
+            "severity": "Medium",
+            "evidence": "Missing HTTP response header: Strict-Transport-Security",
+            "description": "Forces supported browsers to use HTTPS for future requests.",
+            "recommendation": "Configure Strict-Transport-Security after confirming that the application fully supports HTTPS.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-004",
+            "title": "X-Frame-Options header not detected",
+            "severity": "Medium",
+            "evidence": "Missing HTTP response header: X-Frame-Options",
+            "description": "Helps prevent the website from being embedded inside unauthorized frames.",
+            "recommendation": "Set X-Frame-Options to DENY or SAMEORIGIN, or use the CSP frame-ancestors directive.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-005",
+            "title": "X-Content-Type-Options header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: X-Content-Type-Options",
+            "description": "Prevents browsers from MIME-sniffing content into unexpected file types.",
+            "recommendation": "Set X-Content-Type-Options to nosniff.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-006",
+            "title": "Referrer-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Referrer-Policy",
+            "description": "Controls how much referrer information is sent with requests.",
+            "recommendation": "Configure an appropriate Referrer-Policy such as strict-origin-when-cross-origin.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-007",
+            "title": "Permissions-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Permissions-Policy",
+            "description": "Controls access to selected browser capabilities and APIs.",
+            "recommendation": "Define a Permissions-Policy appropriate for the application.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-008",
+            "title": "Cross-Origin-Opener-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Cross-Origin-Opener-Policy",
+            "description": "Helps isolate the browsing context from cross-origin documents.",
+            "recommendation": "Consider configuring Cross-Origin-Opener-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-009",
+            "title": "Cross-Origin-Resource-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Cross-Origin-Resource-Policy",
+            "description": "Controls whether cross-origin websites can load resources.",
+            "recommendation": "Consider configuring Cross-Origin-Resource-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-010",
+            "title": "Server banner exposed",
+            "severity": "Low",
+            "evidence": "Server: Google Frontend",
+            "description": "The HTTP response exposes information about the web server technology.",
+            "recommendation": "Minimize unnecessary server product or version information in HTTP response headers.",
+            "source_module": "security_headers"
+        }
+    ],
+    "modules": {
+        "whois": {
+            "module": "whois_lookup",
+            "status": "success",
+            "data": {
+                "domain_name": "HELLO.COM",
+                "registrar": "Squarespace Domains II LLC",
+                "whois_server": "whois.squarespace.domains",
+                "creation_date": "1997-04-30T04:00:00+00:00",
+                "updated_date": "2026-04-16T12:44:21+00:00",
+                "expiration_date": "2027-05-01T04:00:00+00:00",
+                "domain_age_days": 10691,
+                "name_servers": [
+                    "ns100.digicertdns.com",
+                    "ns101.digicertdns.com",
+                    "ns102.digicertdns.com"
+                ],
+                "status": [
+                    "clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited",
+                    "clientTransferProhibited https://icann.org/epp#clientTransferProhibited",
+                    "client transfer prohibited http://www.icann.org/epp#client transfer prohibited",
+                    "client delete prohibited http://www.icann.org/epp#client delete prohibited"
+                ],
+                "dnssec": "unsigned",
+                "registrant_organization": "Hello Network, Inc.",
+                "registrant_country": "US"
+            },
+            "observations": [],
+            "errors": []
+        },
+        "dns": {
+            "module": "dns_lookup",
+            "status": "success",
+            "data": {
+                "hostname": "hello.com",
+                "records": {
+                    "A": [
+                        "216.239.38.21",
+                        "216.239.34.21",
+                        "216.239.36.21",
+                        "216.239.32.21"
+                    ],
+                    "AAAA": [
+                        "2001:4860:4802:38::15",
+                        "2001:4860:4802:34::15",
+                        "2001:4860:4802:36::15",
+                        "2001:4860:4802:32::15"
+                    ],
+                    "MX": [
+                        "1 SMTP.GOOGLE.com"
+                    ],
+                    "NS": [
+                        "ns102.digicertdns.com",
+                        "ns100.digicertdns.com",
+                        "ns101.digicertdns.com"
+                    ],
+                    "TXT": [
+                        "v=spf1 ip4:50.242.118.232/29 ip4:198.21.2.190 ip4:149.72.166.252 include:_spf.google.com include:mail.zendesk.com ~all",
+                        "google-site-verification=iAAqFNCXI_MXI0UErMiP64xbJb9Z3bzivd3YxHfk6xw"
+                    ],
+                    "CNAME": [],
+                    "SOA": [
+                        "ns1.hello.com. sysadmin.hello.com. 2025092508 28800 7200 1814400 14400"
+                    ]
+                }
+            },
+            "observations": [],
+            "errors": []
+        },
+        "ip": {
+            "module": "ip_lookup",
+            "status": "success",
+            "data": {
+                "ipv4_addresses": [
+                    "216.239.38.21",
+                    "216.239.34.21",
+                    "216.239.36.21",
+                    "216.239.32.21"
+                ],
+                "ipv6_addresses": [
+                    "2001:4860:4802:38::15",
+                    "2001:4860:4802:34::15",
+                    "2001:4860:4802:36::15",
+                    "2001:4860:4802:32::15"
+                ],
+                "results": [
+                    {
+                        "ip_address": "216.239.38.21",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv4",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2615.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "216.239.38.21"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "California",
+                                "city": "San Jose",
+                                "latitude": 37.3361663,
+                                "longitude": -121.8905913,
+                                "timezone": "America/Los_Angeles",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "216.239.34.21",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv4",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2215.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "216.239.34.21"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "California",
+                                "city": "San Jose",
+                                "latitude": 37.3361663,
+                                "longitude": -121.8905913,
+                                "timezone": "America/Los_Angeles",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "216.239.36.21",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv4",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2415.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "216.239.36.21"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "California",
+                                "city": "San Jose",
+                                "latitude": 37.3361663,
+                                "longitude": -121.8905913,
+                                "timezone": "America/Los_Angeles",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "216.239.32.21",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv4",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2015.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "216.239.32.21"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "California",
+                                "city": "San Jose",
+                                "latitude": 37.3361663,
+                                "longitude": -121.8905913,
+                                "timezone": "America/Los_Angeles",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "2001:4860:4802:38::15",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv6",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2001-4860-4802-38--15.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "2001:4860:4802:38::15"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "District of Columbia",
+                                "city": "Washington",
+                                "latitude": 38.8950982,
+                                "longitude": -77.0363849,
+                                "timezone": "America/New_York",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "2001:4860:4802:34::15",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv6",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2001-4860-4802-34--15.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "2001:4860:4802:34::15"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "District of Columbia",
+                                "city": "Washington",
+                                "latitude": 38.8950982,
+                                "longitude": -77.0363849,
+                                "timezone": "America/New_York",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "2001:4860:4802:36::15",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv6",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2001-4860-4802-36--15.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "2001:4860:4802:36::15"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "District of Columbia",
+                                "city": "Washington",
+                                "latitude": 38.8950982,
+                                "longitude": -77.0363849,
+                                "timezone": "America/New_York",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    },
+                    {
+                        "ip_address": "2001:4860:4802:32::15",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv6",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "any-in-2001-4860-4802-32--15.1e100.net",
+                            "aliases": [],
+                            "addresses": [
+                                "2001:4860:4802:32::15"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "United States",
+                                "country_code": "US",
+                                "region": "District of Columbia",
+                                "city": "Washington",
+                                "latitude": 38.8950982,
+                                "longitude": -77.0363849,
+                                "timezone": "America/New_York",
+                                "asn": 15169,
+                                "organization": "Google LLC",
+                                "isp": "Google LLC"
+                            },
+                            "error": null
+                        }
+                    }
+                ]
+            },
+            "observations": [],
+            "errors": []
+        },
+        "http": {
+            "module": "http_headers",
+            "status": "success",
+            "data": {
+                "requested_url": "https://hello.com/",
+                "final_url": "https://hello.com/",
+                "status_code": 200,
+                "reason": "OK",
+                "redirect_count": 0,
+                "redirects": [],
+                "headers": {
+                    "x-cloud-trace-context": "2ec6ac934e1a8f0481d45a71885aaf68",
+                    "content-encoding": "gzip",
+                    "server": "Google Frontend",
+                    "date": "Fri, 07 Aug 2026 16:28:03 GMT",
+                    "expires": "Fri, 07 Aug 2026 16:38:03 GMT",
+                    "Cache-Control": "public, max-age=600",
+                    "ETag": "\"YlKgMw\"",
+                    "Content-Type": "text/html",
+                    "Age": "0",
+                    "Transfer-Encoding": "chunked"
+                },
+                "server": null,
+                "x_powered_by": null,
+                "content_type": "text/html",
+                "content_length": null,
+                "response_time_ms": 691.74,
+                "https": true
+            },
+            "observations": [],
+            "errors": []
+        },
+        "robots": {
+            "module": "robots_fetcher",
+            "status": "success",
+            "data": {
+                "robots_url": "https://hello.com/robots.txt",
+                "final_url": "https://hello.com/robots.txt",
+                "status_code": 404,
+                "exists": false,
+                "content_type": "text/html; charset=UTF-8",
+                "content": null,
+                "parsed": {
+                    "user_agents": [],
+                    "disallow_paths": [],
+                    "allow_paths": [],
+                    "sitemaps": []
+                }
+            },
+            "observations": [],
+            "errors": []
+        },
+        "sitemap": {
+            "module": "sitemap_fetcher",
+            "status": "success",
+            "data": {
+                "exists": false,
+                "candidate_results": [
+                    {
+                        "status": "not_found",
+                        "requested_url": "https://hello.com/sitemap.xml",
+                        "final_url": "https://hello.com/sitemap.xml",
+                        "status_code": 404,
+                        "content_type": "text/html; charset=UTF-8",
+                        "type": null,
+                        "urls": [],
+                        "nested_sitemaps": [],
+                        "error": null
+                    },
+                    {
+                        "status": "not_found",
+                        "requested_url": "https://hello.com/sitemap_index.xml",
+                        "final_url": "https://hello.com/sitemap_index.xml",
+                        "status_code": 404,
+                        "content_type": "text/html; charset=UTF-8",
+                        "type": null,
+                        "urls": [],
+                        "nested_sitemaps": [],
+                        "error": null
+                    }
+                ],
+                "sitemaps": [],
+                "urls": [],
+                "total_urls": 0
+            },
+            "observations": [],
+            "errors": []
+        },
+        "tls": {
+            "module": "tls_certificate",
+            "status": "success",
+            "data": {
+                "hostname": "hello.com",
+                "port": 443,
+                "tls_version": "TLSv1.3",
+                "subject": {
+                    "commonName": "*.hello.com"
+                },
+                "common_name": "*.hello.com",
+                "issuer": {
+                    "countryName": "AT",
+                    "organizationName": "ZeroSSL GmbH",
+                    "commonName": "ZeroSSL RSA DV SSL CA 2"
+                },
+                "subject_alt_names": [
+                    "*.hello.com",
+                    "hello.com"
+                ],
+                "serial_number": "46B11E26DB84C96F7AFCE3F8CA3FEE52",
+                "valid_from": "2026-06-02T00:00:00+00:00",
+                "valid_until": "2026-08-31T23:59:59+00:00",
+                "days_remaining": 24,
+                "certificate_status": "Expiring Soon",
+                "certificate_severity": "Medium",
+                "cipher": {
+                    "name": "TLS_AES_256_GCM_SHA384",
+                    "protocol": "TLSv1.3",
+                    "bits": 256
+                }
+            },
+            "observations": [
+                {
+                    "title": "TLS certificate approaching expiry",
+                    "severity": "Medium",
+                    "evidence": "Certificate expires in 24 day(s).",
+                    "recommendation": "Schedule certificate renewal before expiration."
+                }
+            ],
+            "errors": []
+        },
+        "security_headers": {
+            "module": "security_headers",
+            "status": "success",
+            "data": {
+                "checked_headers": [
+                    "Content-Security-Policy",
+                    "Strict-Transport-Security",
+                    "X-Frame-Options",
+                    "X-Content-Type-Options",
+                    "Referrer-Policy",
+                    "Permissions-Policy",
+                    "Cross-Origin-Opener-Policy",
+                    "Cross-Origin-Resource-Policy"
+                ],
+                "severity_summary": {
+                    "High": 0,
+                    "Medium": 3,
+                    "Low": 6,
+                    "Informational": 0
+                },
+                "total_observations": 9
+            },
+            "observations": [
+                {
+                    "id": "RF-001",
+                    "title": "Content-Security-Policy header not detected",
+                    "severity": "Medium",
+                    "evidence": "Missing HTTP response header: Content-Security-Policy",
+                    "description": "Helps restrict which scripts, styles, images, and other resources the browser is allowed to load.",
+                    "recommendation": "Implement and test a restrictive Content-Security-Policy."
+                },
+                {
+                    "id": "RF-002",
+                    "title": "Strict-Transport-Security header not detected",
+                    "severity": "Medium",
+                    "evidence": "Missing HTTP response header: Strict-Transport-Security",
+                    "description": "Forces supported browsers to use HTTPS for future requests.",
+                    "recommendation": "Configure Strict-Transport-Security after confirming that the application fully supports HTTPS."
+                },
+                {
+                    "id": "RF-003",
+                    "title": "X-Frame-Options header not detected",
+                    "severity": "Medium",
+                    "evidence": "Missing HTTP response header: X-Frame-Options",
+                    "description": "Helps prevent the website from being embedded inside unauthorized frames.",
+                    "recommendation": "Set X-Frame-Options to DENY or SAMEORIGIN, or use the CSP frame-ancestors directive."
+                },
+                {
+                    "id": "RF-004",
+                    "title": "X-Content-Type-Options header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: X-Content-Type-Options",
+                    "description": "Prevents browsers from MIME-sniffing content into unexpected file types.",
+                    "recommendation": "Set X-Content-Type-Options to nosniff."
+                },
+                {
+                    "id": "RF-005",
+                    "title": "Referrer-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Referrer-Policy",
+                    "description": "Controls how much referrer information is sent with requests.",
+                    "recommendation": "Configure an appropriate Referrer-Policy such as strict-origin-when-cross-origin."
+                },
+                {
+                    "id": "RF-006",
+                    "title": "Permissions-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Permissions-Policy",
+                    "description": "Controls access to selected browser capabilities and APIs.",
+                    "recommendation": "Define a Permissions-Policy appropriate for the application."
+                },
+                {
+                    "id": "RF-007",
+                    "title": "Cross-Origin-Opener-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Cross-Origin-Opener-Policy",
+                    "description": "Helps isolate the browsing context from cross-origin documents.",
+                    "recommendation": "Consider configuring Cross-Origin-Opener-Policy."
+                },
+                {
+                    "id": "RF-008",
+                    "title": "Cross-Origin-Resource-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Cross-Origin-Resource-Policy",
+                    "description": "Controls whether cross-origin websites can load resources.",
+                    "recommendation": "Consider configuring Cross-Origin-Resource-Policy."
+                },
+                {
+                    "id": "RF-009",
+                    "title": "Server banner exposed",
+                    "severity": "Low",
+                    "evidence": "Server: Google Frontend",
+                    "description": "The HTTP response exposes information about the web server technology.",
+                    "recommendation": "Minimize unnecessary server product or version information in HTTP response headers."
+                }
+            ],
+            "errors": []
+        }
+    },
+    "limitations": [
+        "ReconForge performs reconnaissance and configuration observations only.",
+        "Results should be manually validated before being treated as confirmed vulnerabilities.",
+        "IP geolocation represents approximate network location and not a precise physical location.",
+        "WHOIS information may be incomplete or redacted by domain registries."
+    ]
+}

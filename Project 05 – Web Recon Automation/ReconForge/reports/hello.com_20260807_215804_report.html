@@ -1,0 +1,3021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ReconForge Reconnaissance Report
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #f5f7fa;
+            --surface: #ffffff;
+            --text: #17202a;
+            --muted: #667085;
+            --border: #e4e7ec;
+
+            --primary: #087f5b;
+
+            --high: #c92a2a;
+            --medium: #e67700;
+            --low: #1971c2;
+            --info: #667085;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+
+        .report {
+            max-width: 1180px;
+
+            margin: 30px auto;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        /* Cover */
+
+        .cover {
+            min-height: 450px;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 70px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #071510,
+                    #0d2b20
+                );
+
+            color: white;
+        }
+
+        .cover-label {
+            color: #69dbb5;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .cover h1 {
+            margin:
+                18px 0 5px;
+
+            font-size: 46px;
+        }
+
+        .cover h2 {
+            font-size: 23px;
+
+            font-weight: normal;
+
+            margin: 0;
+
+            color: #d3f9e8;
+        }
+
+        .cover-target {
+            margin-top: 50px;
+
+            border-left:
+                4px solid #69dbb5;
+
+            padding-left: 18px;
+        }
+
+        .cover-target span {
+            display: block;
+
+            color: #b7d8cc;
+
+            font-size: 12px;
+        }
+
+        .cover-target strong {
+            font-size: 22px;
+        }
+
+
+        /* Content */
+
+        .content {
+            padding: 45px 55px;
+        }
+
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 23px;
+
+            border-bottom:
+                2px solid var(--primary);
+
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 17px;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+
+        /* Summary */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .summary-card {
+            border:
+                1px solid var(--border);
+
+            border-radius: 7px;
+
+            padding: 16px;
+
+            background: #fafafa;
+        }
+
+        .summary-card span {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+        }
+
+        .summary-card strong {
+            display: block;
+
+            margin-top: 6px;
+
+            font-size: 25px;
+        }
+
+
+        /* Tables */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border:
+                1px solid var(--border);
+
+            padding: 10px 12px;
+
+            vertical-align: top;
+
+            text-align: left;
+
+            word-break: break-word;
+        }
+
+        th {
+            background: #f2f4f7;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* Status */
+
+        .status {
+            display: inline-block;
+
+            padding: 3px 8px;
+
+            border-radius: 12px;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+        }
+
+        .success {
+            color: #087f5b;
+
+            background: #d3f9e8;
+        }
+
+        .partial {
+            color: #e67700;
+
+            background: #fff3bf;
+        }
+
+        .failed {
+            color: #c92a2a;
+
+            background: #ffe3e3;
+        }
+
+        .skipped {
+            color: #667085;
+
+            background: #f2f4f7;
+        }
+
+
+        /* Severity */
+
+        .severity {
+            font-weight: bold;
+        }
+
+        .severity-high {
+            color: var(--high);
+        }
+
+        .severity-medium {
+            color: var(--medium);
+        }
+
+        .severity-low {
+            color: var(--low);
+        }
+
+        .severity-informational {
+            color: var(--info);
+        }
+
+
+        /* Findings */
+
+        .finding {
+            border:
+                1px solid var(--border);
+
+            border-left:
+                4px solid var(--border);
+
+            border-radius: 6px;
+
+            padding: 16px;
+
+            margin-bottom: 14px;
+
+            page-break-inside: avoid;
+        }
+
+        .finding-high {
+            border-left-color: var(--high);
+        }
+
+        .finding-medium {
+            border-left-color: var(--medium);
+        }
+
+        .finding-low {
+            border-left-color: var(--low);
+        }
+
+        .finding-informational {
+            border-left-color: var(--info);
+        }
+
+        .finding-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .finding-header h3 {
+            margin: 0;
+        }
+
+        .finding p {
+            margin:
+                9px 0 0;
+        }
+
+        .finding-label {
+            font-weight: bold;
+        }
+
+
+        /* Technical blocks */
+
+        .technical-block {
+            background: #f8f9fa;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 5px;
+
+            padding: 13px;
+
+            font-family:
+                Consolas,
+                monospace;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+
+        /* Footer */
+
+        footer {
+            border-top:
+                1px solid var(--border);
+
+            padding: 25px 55px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        /* PDF */
+
+        @page {
+            size: A4;
+
+            margin: 16mm;
+        }
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .report {
+                border: none;
+
+                margin: 0;
+
+                max-width: none;
+            }
+
+            .cover {
+                min-height: 250mm;
+
+                page-break-after: always;
+            }
+
+            section {
+                page-break-inside: auto;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="report">
+
+
+    <!-- COVER -->
+
+    <div class="cover">
+
+        <div class="cover-label">
+            Authorized Security Reconnaissance
+        </div>
+
+        <h1>
+            ReconForge
+        </h1>
+
+        <h2>
+            Web Reconnaissance Report
+        </h2>
+
+
+        <div class="cover-target">
+
+            <span>
+                ASSESSED TARGET
+            </span>
+
+            <strong>
+                hello.com
+            </strong>
+
+        </div>
+
+
+        <p style="margin-top: 35px; color: #b7d8cc;">
+
+            Generated:
+            2026-08-07T16:28:04.510658+00:00
+
+        </p>
+
+    </div>
+
+
+    <div class="content">
+
+
+        <!-- AUTHORIZATION -->
+
+        <section>
+
+            <h2>
+                1. Scope & Authorization
+            </h2>
+
+            <p>
+
+                This report contains reconnaissance information
+                collected by ReconForge against an explicitly
+                authorized target.
+
+            </p>
+
+            <p>
+
+                ReconForge performs low-impact reconnaissance and
+                configuration analysis. Findings in this report
+                should not automatically be interpreted as confirmed
+                exploitable vulnerabilities.
+
+            </p>
+
+        </section>
+
+
+        <!-- EXECUTIVE SUMMARY -->
+
+        <section>
+
+            <h2>
+                2. Executive Summary
+            </h2>
+
+            <p>
+
+                ReconForge collected publicly available domain,
+                DNS, network, HTTP, TLS, robots.txt and sitemap
+                information for the assessed target.
+
+            </p>
+
+            <p>
+
+                Security configuration observations were generated
+                where applicable and should be manually validated
+                before remediation decisions are made.
+
+            </p>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <span>
+                        Modules
+                    </span>
+
+                    <strong>
+                        8
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Observations
+                    </span>
+
+                    <strong>
+                        10
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        High
+                    </span>
+
+                    <strong class="severity-high">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Medium
+                    </span>
+
+                    <strong class="severity-medium">
+                        4
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        Low
+                    </span>
+
+                    <strong class="severity-low">
+                        6
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TARGET -->
+
+        <section>
+
+            <h2>
+                3. Target Information
+            </h2>
+
+            <table>
+
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Original Input</td>
+                    <td>hello.com</td>
+                </tr>
+
+                <tr>
+                    <td>Hostname</td>
+                    <td>hello.com</td>
+                </tr>
+
+                <tr>
+                    <td>HTTPS URL</td>
+                    <td>https://hello.com</td>
+                </tr>
+
+                <tr>
+                    <td>HTTP URL</td>
+                    <td>http://hello.com</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+
+        <!-- MODULE STATUS -->
+
+        <section>
+
+            <h2>
+                4. Reconnaissance Module Status
+            </h2>
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Module</th>
+                    <th>Status</th>
+                    <th>Errors / Warnings</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                
+
+                <tr>
+
+                    <td>
+                        whois
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        dns
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        ip
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        http
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        robots
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        sitemap
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        tls
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        security_headers
+                    </td>
+
+                    <td>
+
+                        <span class="status success">
+
+                            success
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        
+
+                            None
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- WHOIS -->
+
+        
+
+        <section>
+
+            <h2>
+                5. WHOIS Information
+            </h2>
+
+            
+
+            <table>
+
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>Domain</td>
+                    <td>HELLO.COM</td>
+                </tr>
+
+                <tr>
+                    <td>Registrar</td>
+                    <td>Squarespace Domains II LLC</td>
+                </tr>
+
+                <tr>
+                    <td>Creation Date</td>
+                    <td>1997-04-30T04:00:00+00:00</td>
+                </tr>
+
+                <tr>
+                    <td>Expiration Date</td>
+                    <td>2027-05-01T04:00:00+00:00</td>
+                </tr>
+
+                <tr>
+                    <td>DNSSEC</td>
+                    <td>unsigned</td>
+                </tr>
+
+                <tr>
+                    <td>Registrant Country</td>
+                    <td>US</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+        
+
+
+        <!-- DNS -->
+
+        
+
+        <section>
+
+            <h2>
+                6. DNS Records
+            </h2>
+
+            
+
+            <table>
+
+                <tr>
+                    <th>Record Type</th>
+                    <th>Values</th>
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        A
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    216.239.38.21
+                                </div>
+
+                            
+
+                                <div>
+                                    216.239.34.21
+                                </div>
+
+                            
+
+                                <div>
+                                    216.239.36.21
+                                </div>
+
+                            
+
+                                <div>
+                                    216.239.32.21
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        AAAA
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    2001:4860:4802:38::15
+                                </div>
+
+                            
+
+                                <div>
+                                    2001:4860:4802:34::15
+                                </div>
+
+                            
+
+                                <div>
+                                    2001:4860:4802:36::15
+                                </div>
+
+                            
+
+                                <div>
+                                    2001:4860:4802:32::15
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        MX
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    1 SMTP.GOOGLE.com
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        NS
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    ns102.digicertdns.com
+                                </div>
+
+                            
+
+                                <div>
+                                    ns100.digicertdns.com
+                                </div>
+
+                            
+
+                                <div>
+                                    ns101.digicertdns.com
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        TXT
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    v=spf1 ip4:50.242.118.232/29 ip4:198.21.2.190 ip4:149.72.166.252 include:_spf.google.com include:mail.zendesk.com ~all
+                                </div>
+
+                            
+
+                                <div>
+                                    google-site-verification=iAAqFNCXI_MXI0UErMiP64xbJb9Z3bzivd3YxHfk6xw
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        CNAME
+                    </td>
+
+                    <td>
+
+                        
+
+                            No records detected
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                    <td>
+                        SOA
+                    </td>
+
+                    <td>
+
+                        
+
+                            
+
+                                <div>
+                                    ns1.hello.com. sysadmin.hello.com. 2025092508 28800 7200 1814400 14400
+                                </div>
+
+                            
+
+                        
+
+                    </td>
+
+                </tr>
+
+                
+
+            </table>
+
+        </section>
+
+        
+
+
+        <!-- IP -->
+
+        
+
+        <section>
+
+            <h2>
+                7. IP & Network Information
+            </h2>
+
+
+            
+
+                <h3>
+                    216.239.38.21
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv4
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2615.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            California
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            San Jose
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    216.239.34.21
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv4
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2215.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            California
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            San Jose
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    216.239.36.21
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv4
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2415.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            California
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            San Jose
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    216.239.32.21
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv4
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2015.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            California
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            San Jose
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    2001:4860:4802:38::15
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv6
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2001-4860-4802-38--15.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            District of Columbia
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            Washington
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    2001:4860:4802:34::15
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv6
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2001-4860-4802-34--15.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            District of Columbia
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            Washington
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    2001:4860:4802:36::15
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv6
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2001-4860-4802-36--15.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            District of Columbia
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            Washington
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+                <h3>
+                    2001:4860:4802:32::15
+                </h3>
+
+                <table>
+
+                    <tr>
+                        <td>Version</td>
+                        <td>
+                            IPv6
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Public</td>
+                        <td>
+                            True
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reverse DNS</td>
+                        <td>
+
+                            
+
+                                any-in-2001-4860-4802-32--15.1e100.net
+
+                            
+
+                        </td>
+                    </tr>
+
+
+                    
+
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            United States
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Region</td>
+                        <td>
+                            District of Columbia
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            Washington
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>ASN</td>
+                        <td>
+                            15169
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Organization</td>
+                        <td>
+                            Google LLC
+                        </td>
+                    </tr>
+
+                    
+
+                </table>
+
+            
+
+        </section>
+
+        
+
+
+        <!-- HTTP -->
+
+        
+
+        <section>
+
+            <h2>
+                8. HTTP Analysis
+            </h2>
+
+            
+
+            <table>
+
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        200
+                        OK
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Final URL</td>
+                    <td>https://hello.com/</td>
+                </tr>
+
+                <tr>
+                    <td>Response Time</td>
+                    <td>
+                        691.74 ms
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Server</td>
+                    <td>
+                        Not disclosed
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>X-Powered-By</td>
+                    <td>
+                        Not disclosed
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Response Headers
+            </h3>
+
+            <div class="technical-block">
+x-cloud-trace-context: 2ec6ac934e1a8f0481d45a71885aaf68
+content-encoding: gzip
+server: Google Frontend
+date: Fri, 07 Aug 2026 16:28:03 GMT
+expires: Fri, 07 Aug 2026 16:38:03 GMT
+Cache-Control: public, max-age=600
+ETag: &#34;YlKgMw&#34;
+Content-Type: text/html
+Age: 0
+Transfer-Encoding: chunked
+
+            </div>
+
+        </section>
+
+        
+
+
+        <!-- TLS -->
+
+        
+
+        <section>
+
+            <h2>
+                9. TLS Certificate
+            </h2>
+
+            
+
+            <table>
+
+                <tr>
+                    <td>TLS Version</td>
+                    <td>TLSv1.3</td>
+                </tr>
+
+                <tr>
+                    <td>Common Name</td>
+                    <td>*.hello.com</td>
+                </tr>
+
+                <tr>
+                    <td>Valid From</td>
+                    <td>2026-06-02T00:00:00+00:00</td>
+                </tr>
+
+                <tr>
+                    <td>Valid Until</td>
+                    <td>2026-08-31T23:59:59+00:00</td>
+                </tr>
+
+                <tr>
+                    <td>Days Remaining</td>
+                    <td>24</td>
+                </tr>
+
+                <tr>
+                    <td>Certificate Status</td>
+                    <td>
+                        Expiring Soon
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Cipher</td>
+
+                    <td>
+
+                        TLS_AES_256_GCM_SHA384
+
+                        /
+
+                        256 bits
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Subject Alternative Names
+            </h3>
+
+            <ul>
+
+                
+
+                <li>
+                    *.hello.com
+                </li>
+
+                
+
+                <li>
+                    hello.com
+                </li>
+
+                
+
+            </ul>
+
+        </section>
+
+        
+
+
+        <!-- ROBOTS -->
+
+        
+
+        <section>
+
+            <h2>
+                10. robots.txt
+            </h2>
+
+            
+
+            <p>
+                <strong>Exists:</strong>
+                False
+            </p>
+
+            <p>
+                <strong>Status Code:</strong>
+                404
+            </p>
+
+
+            
+
+        </section>
+
+        
+
+
+        <!-- SITEMAP -->
+
+        
+
+        <section>
+
+            <h2>
+                11. Sitemap Analysis
+            </h2>
+
+            <p>
+
+                <strong>
+                    Sitemap Available:
+                </strong>
+
+                False
+
+            </p>
+
+            <p>
+
+                <strong>
+                    URLs Discovered:
+                </strong>
+
+                0
+
+            </p>
+
+
+            
+
+        </section>
+
+        
+
+
+        <!-- FINDINGS -->
+
+        <section>
+
+            <h2>
+                12. Security Observations
+            </h2>
+
+
+            
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-medium
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-001
+
+                            —
+
+                            TLS certificate approaching expiry
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-medium
+                            "
+                        >
+
+                            Medium
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        tls
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Certificate expires in 24 day(s).
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Schedule certificate renewal before expiration.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-medium
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-002
+
+                            —
+
+                            Content-Security-Policy header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-medium
+                            "
+                        >
+
+                            Medium
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Content-Security-Policy
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Helps restrict which scripts, styles, images, and other resources the browser is allowed to load.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Implement and test a restrictive Content-Security-Policy.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-medium
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-003
+
+                            —
+
+                            Strict-Transport-Security header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-medium
+                            "
+                        >
+
+                            Medium
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Strict-Transport-Security
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Forces supported browsers to use HTTPS for future requests.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Configure Strict-Transport-Security after confirming that the application fully supports HTTPS.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-medium
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-004
+
+                            —
+
+                            X-Frame-Options header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-medium
+                            "
+                        >
+
+                            Medium
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: X-Frame-Options
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Helps prevent the website from being embedded inside unauthorized frames.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Set X-Frame-Options to DENY or SAMEORIGIN, or use the CSP frame-ancestors directive.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-005
+
+                            —
+
+                            X-Content-Type-Options header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: X-Content-Type-Options
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Prevents browsers from MIME-sniffing content into unexpected file types.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Set X-Content-Type-Options to nosniff.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-006
+
+                            —
+
+                            Referrer-Policy header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Referrer-Policy
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Controls how much referrer information is sent with requests.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Configure an appropriate Referrer-Policy such as strict-origin-when-cross-origin.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-007
+
+                            —
+
+                            Permissions-Policy header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Permissions-Policy
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Controls access to selected browser capabilities and APIs.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Define a Permissions-Policy appropriate for the application.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-008
+
+                            —
+
+                            Cross-Origin-Opener-Policy header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Cross-Origin-Opener-Policy
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Helps isolate the browsing context from cross-origin documents.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Consider configuring Cross-Origin-Opener-Policy.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-009
+
+                            —
+
+                            Cross-Origin-Resource-Policy header not detected
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Missing HTTP response header: Cross-Origin-Resource-Policy
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        Controls whether cross-origin websites can load resources.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Consider configuring Cross-Origin-Resource-Policy.
+
+                    </p>
+
+                </div>
+
+                
+
+                <div
+                    class="
+                        finding
+                        finding-low
+                    "
+                >
+
+                    <div class="finding-header">
+
+                        <h3>
+
+                            RF-010
+
+                            —
+
+                            Server banner exposed
+
+                        </h3>
+
+                        <span
+                            class="
+                                severity
+                                severity-low
+                            "
+                        >
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Source Module:
+                        </span>
+
+                        security_headers
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Evidence:
+                        </span>
+
+                        Server: Google Frontend
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Description:
+                        </span>
+
+                        The HTTP response exposes information about the web server technology.
+
+                    </p>
+
+
+                    <p>
+
+                        <span class="finding-label">
+                            Recommendation:
+                        </span>
+
+                        Minimize unnecessary server product or version information in HTTP response headers.
+
+                    </p>
+
+                </div>
+
+                
+
+
+            
+
+        </section>
+
+
+        <!-- LIMITATIONS -->
+
+        <section>
+
+            <h2>
+                13. Limitations
+            </h2>
+
+            <ul>
+
+                
+
+                <li>
+                    ReconForge performs reconnaissance and configuration observations only.
+                </li>
+
+                
+
+                <li>
+                    Results should be manually validated before being treated as confirmed vulnerabilities.
+                </li>
+
+                
+
+                <li>
+                    IP geolocation represents approximate network location and not a precise physical location.
+                </li>
+
+                
+
+                <li>
+                    WHOIS information may be incomplete or redacted by domain registries.
+                </li>
+
+                
+
+            </ul>
+
+        </section>
+
+
+        <!-- CONCLUSION -->
+
+        <section>
+
+            <h2>
+                14. Conclusion
+            </h2>
+
+            <p>
+
+                ReconForge completed automated reconnaissance
+                against the authorized target and consolidated
+                the collected information into this report.
+
+            </p>
+
+            <p>
+
+                Security observations should be manually reviewed
+                before they are classified as confirmed
+                vulnerabilities or used to make remediation
+                decisions.
+
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <footer>
+
+        ReconForge v1.0.0 —
+        Authorized Web Reconnaissance Framework
+
+        <br>
+
+        Generated:
+        2026-08-07T16:28:04.510658+00:00
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

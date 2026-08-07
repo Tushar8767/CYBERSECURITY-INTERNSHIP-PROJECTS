@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ReconForge - Authorized Web Reconnaissance Framework"
+    >
+
+    <title>
+        ReconForge | Web Reconnaissance Framework
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     APPLICATION SHELL
+========================================================= -->
+
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                RF
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    ReconForge
+                </strong>
+
+                <span>
+                    Recon Framework
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="#scanner"
+                class="nav-item active"
+            >
+                Scanner
+            </a>
+
+            <a
+                href="#overview"
+                class="nav-item"
+            >
+                Overview
+            </a>
+
+            <a
+                href="#modules"
+                class="nav-item"
+            >
+                Modules
+            </a>
+
+            <a
+                href="#findings"
+                class="nav-item"
+            >
+                Observations
+            </a>
+
+            <a
+                href="#reports"
+                class="nav-item"
+            >
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="authorization-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        Authorized Use Only
+                    </strong>
+
+                    <span>
+                        ReconForge v1.0.0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="eyebrow">
+                    PROJECT 05 · AUTOMATION / DEV
+                </span>
+
+                <h1>
+                    Web Reconnaissance Dashboard
+                </h1>
+
+                <p>
+                    Automated reconnaissance and security
+                    configuration analysis for authorized targets.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-badge">
+
+                <span class="status-dot"></span>
+
+                System Ready
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             AUTHORIZATION NOTICE
+        ================================================== -->
+
+        <div class="authorization-banner">
+
+            <strong>
+                Authorization Required
+            </strong>
+
+            <span>
+                Only perform reconnaissance against domains
+                you own or have explicit permission to assess.
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             TARGET SCANNER
+        ================================================== -->
+
+        <section
+            id="scanner"
+            class="panel scan-panel"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PRE-FLIGHT
+                    </span>
+
+                    <h2>
+                        Authorized Target
+                    </h2>
+
+                    <p>
+                        Verify DNS and web availability before
+                        starting the complete reconnaissance workflow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="scan-input-row">
+
+                <div class="target-input-wrapper">
+
+                    <span class="input-prefix">
+                        TARGET
+                    </span>
+
+                    <input
+                        type="text"
+                        id="targetInput"
+                        placeholder="example.com"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="checkButton"
+                    class="secondary-button"
+                    onclick="checkTarget()"
+                >
+                    Check Target
+                </button>
+
+
+                <button
+                    type="button"
+                    id="scanButton"
+                    onclick="startScan()"
+                    disabled
+                >
+                    Start Recon
+                </button>
+
+            </div>
+
+
+            <!-- Pre-flight Result -->
+
+            <div
+                id="preflightPanel"
+                class="preflight-panel hidden"
+            >
+
+                <div>
+
+                    <span>
+                        TARGET STATUS
+                    </span>
+
+                    <strong id="targetStatus">
+                        UNKNOWN
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        DNS RESOLUTION
+                    </span>
+
+                    <strong id="dnsStatus">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        WEB SERVICE
+                    </span>
+
+                    <strong id="webStatus">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Application Status -->
+
+            <div
+                id="scanStatus"
+                class="scan-status hidden"
+                role="status"
+                aria-live="polite"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCAN SUMMARY
+        ================================================== -->
+
+        <section
+            id="summarySection"
+            class="hidden"
+        >
+
+            <div
+                id="overview"
+                class="section-header"
+            >
+
+                <div>
+
+                    <span class="section-label">
+                        SCAN OVERVIEW
+                    </span>
+
+                    <h2>
+                        Reconnaissance Summary
+                    </h2>
+
+                    <p>
+                        Consolidated results from the completed
+                        reconnaissance workflow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+
+                <!-- Modules -->
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Modules
+                    </span>
+
+                    <strong
+                        id="moduleCount"
+                        class="summary-value"
+                    >
+                        0
+                    </strong>
+
+                    <span class="summary-description">
+                        Recon modules executed
+                    </span>
+
+                </div>
+
+
+                <!-- Observations -->
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Observations
+                    </span>
+
+                    <strong
+                        id="observationCount"
+                        class="summary-value"
+                    >
+                        0
+                    </strong>
+
+                    <span class="summary-description">
+                        Security observations
+                    </span>
+
+                </div>
+
+
+                <!-- High -->
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        High
+                    </span>
+
+                    <strong
+                        id="highCount"
+                        class="
+                            summary-value
+                            severity-high
+                        "
+                    >
+                        0
+                    </strong>
+
+                    <span class="summary-description">
+                        High severity
+                    </span>
+
+                </div>
+
+
+                <!-- Medium -->
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Medium
+                    </span>
+
+                    <strong
+                        id="mediumCount"
+                        class="
+                            summary-value
+                            severity-medium
+                        "
+                    >
+                        0
+                    </strong>
+
+                    <span class="summary-description">
+                        Medium severity
+                    </span>
+
+                </div>
+
+
+                <!-- Low -->
+
+                <div class="summary-card">
+
+                    <span class="summary-label">
+                        Low
+                    </span>
+
+                    <strong
+                        id="lowCount"
+                        class="
+                            summary-value
+                            severity-low
+                        "
+                    >
+                        0
+                    </strong>
+
+                    <span class="summary-description">
+                        Low severity
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================== -->
+
+        <section
+            id="resultsSection"
+            class="results-grid hidden"
+        >
+
+
+            <!-- =============================================
+                 TARGET INFORMATION
+            ============================================== -->
+
+            <div class="panel">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            TARGET
+                        </span>
+
+                        <h2>
+                            Target Information
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="targetDetails"
+                    class="details-list"
+                >
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 MODULE STATUS
+            ============================================== -->
+
+            <div
+                id="modules"
+                class="panel"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            ENGINE
+                        </span>
+
+                        <h2>
+                            Module Status
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="moduleList"
+                    class="module-list"
+                >
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WORKFLOW
+        ================================================== -->
+
+        <section class="panel workflow-panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        FRAMEWORK
+                    </span>
+
+                    <h2>
+                        Reconnaissance Workflow
+                    </h2>
+
+                    <p>
+                        ReconForge collects publicly available
+                        information through independent modules.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow">
+
+                <div class="workflow-item">
+
+                    <span>01</span>
+
+                    <strong>
+                        WHOIS
+                    </strong>
+
+                    <small>
+                        Registration
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>02</span>
+
+                    <strong>
+                        DNS
+                    </strong>
+
+                    <small>
+                        Records
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>03</span>
+
+                    <strong>
+                        IP
+                    </strong>
+
+                    <small>
+                        Network
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>04</span>
+
+                    <strong>
+                        HTTP
+                    </strong>
+
+                    <small>
+                        Headers
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>05</span>
+
+                    <strong>
+                        TLS
+                    </strong>
+
+                    <small>
+                        Certificate
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>06</span>
+
+                    <strong>
+                        Content
+                    </strong>
+
+                    <small>
+                        Robots / Sitemap
+                    </small>
+
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-item">
+
+                    <span>07</span>
+
+                    <strong>
+                        Security
+                    </strong>
+
+                    <small>
+                        Analysis
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SECURITY OBSERVATIONS
+        ================================================== -->
+
+        <section
+            id="findingsSection"
+            class="panel hidden"
+        >
+
+            <div
+                id="findings"
+                class="section-header"
+            >
+
+                <div>
+
+                    <span class="section-label">
+                        ANALYSIS
+                    </span>
+
+                    <h2>
+                        Security Observations
+                    </h2>
+
+                    <p>
+                        Configuration observations discovered
+                        during reconnaissance. These are not
+                        automatically confirmed vulnerabilities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="findingsList"
+                class="findings-list"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORTS
+        ================================================== -->
+
+        <section
+            id="reportSection"
+            class="panel report-panel hidden"
+        >
+
+            <div id="reports">
+
+                <span class="report-label">
+                    RECONNAISSANCE COMPLETE
+                </span>
+
+                <h3>
+                    Professional Reports Generated
+                </h3>
+
+                <p>
+                    Review the formatted reconnaissance report
+                    or download supporting evidence for
+                    documentation and assessment records.
+                </p>
+
+            </div>
+
+
+            <div class="report-actions">
+
+
+                <!-- HTML -->
+
+                <a
+                    id="htmlButton"
+                    class="report-button"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    View HTML Report
+                </a>
+
+
+                <!-- PDF -->
+
+                <a
+                    id="pdfButton"
+                    class="report-button"
+                    href="#"
+                    download
+                >
+                    Download PDF
+                </a>
+
+
+                <!-- JSON -->
+
+                <a
+                    id="jsonButton"
+                    class="
+                        report-button
+                        secondary
+                    "
+                    href="#"
+                    download
+                >
+                    Download JSON Evidence
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LIMITATIONS / ETHICS
+        ================================================== -->
+
+        <section class="panel limitations-panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        IMPORTANT
+                    </span>
+
+                    <h2>
+                        Scope & Limitations
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="limitations-grid">
+
+                <div>
+
+                    <strong>
+                        Passive / Low-Impact Recon
+                    </strong>
+
+                    <p>
+                        ReconForge focuses on publicly available
+                        information and basic web configuration
+                        analysis.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        No Exploitation
+                    </strong>
+
+                    <p>
+                        The framework does not attempt exploitation,
+                        credential attacks, destructive actions,
+                        or vulnerability exploitation.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Manual Validation
+                    </strong>
+
+                    <p>
+                        Security observations require manual
+                        validation before being classified as
+                        confirmed vulnerabilities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+            <div>
+
+                <strong>
+                    ReconForge
+                </strong>
+
+                <span>
+                    Authorized Web Reconnaissance Framework
+                </span>
+
+            </div>
+
+
+            <div>
+
+                Project 05 · Automation / Dev
+
+            </div>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/dashboard.js') }}"
+></script>
+
+</body>
+
+</html>

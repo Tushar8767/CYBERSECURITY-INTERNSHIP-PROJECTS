@@ -1,0 +1,458 @@
+{
+    "tool": {
+        "name": "ReconForge",
+        "version": "1.0.0",
+        "description": "Authorized Web Reconnaissance Framework"
+    },
+    "scan": {
+        "generated_at": "2026-08-07T16:15:31.445610+00:00",
+        "target": {
+            "original": "jspmrscoe.edu.in",
+            "hostname": "jspmrscoe.edu.in",
+            "https_url": "https://jspmrscoe.edu.in",
+            "http_url": "http://jspmrscoe.edu.in",
+            "input_scheme": "https",
+            "is_ip": false
+        },
+        "module_summary": {
+            "total": 8,
+            "success": 8,
+            "partial": 0,
+            "failed": 0,
+            "skipped": 0,
+            "unknown": 0
+        },
+        "total_observations": 9,
+        "severity_summary": {
+            "High": 0,
+            "Medium": 2,
+            "Low": 7,
+            "Informational": 0
+        }
+    },
+    "observations": [
+        {
+            "id": "RF-001",
+            "title": "Content-Security-Policy header not detected",
+            "severity": "Medium",
+            "evidence": "Missing HTTP response header: Content-Security-Policy",
+            "description": "Helps restrict which scripts, styles, images, and other resources the browser is allowed to load.",
+            "recommendation": "Implement and test a restrictive Content-Security-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-002",
+            "title": "X-Frame-Options header not detected",
+            "severity": "Medium",
+            "evidence": "Missing HTTP response header: X-Frame-Options",
+            "description": "Helps prevent the website from being embedded inside unauthorized frames.",
+            "recommendation": "Set X-Frame-Options to DENY or SAMEORIGIN, or use the CSP frame-ancestors directive.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-003",
+            "title": "X-Content-Type-Options header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: X-Content-Type-Options",
+            "description": "Prevents browsers from MIME-sniffing content into unexpected file types.",
+            "recommendation": "Set X-Content-Type-Options to nosniff.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-004",
+            "title": "Referrer-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Referrer-Policy",
+            "description": "Controls how much referrer information is sent with requests.",
+            "recommendation": "Configure an appropriate Referrer-Policy such as strict-origin-when-cross-origin.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-005",
+            "title": "Permissions-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Permissions-Policy",
+            "description": "Controls access to selected browser capabilities and APIs.",
+            "recommendation": "Define a Permissions-Policy appropriate for the application.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-006",
+            "title": "Cross-Origin-Opener-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Cross-Origin-Opener-Policy",
+            "description": "Helps isolate the browsing context from cross-origin documents.",
+            "recommendation": "Consider configuring Cross-Origin-Opener-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-007",
+            "title": "Cross-Origin-Resource-Policy header not detected",
+            "severity": "Low",
+            "evidence": "Missing HTTP response header: Cross-Origin-Resource-Policy",
+            "description": "Controls whether cross-origin websites can load resources.",
+            "recommendation": "Consider configuring Cross-Origin-Resource-Policy.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-008",
+            "title": "Server banner exposed",
+            "severity": "Low",
+            "evidence": "Server: Microsoft-IIS/10.0",
+            "description": "The HTTP response exposes information about the web server technology.",
+            "recommendation": "Minimize unnecessary server product or version information in HTTP response headers.",
+            "source_module": "security_headers"
+        },
+        {
+            "id": "RF-009",
+            "title": "Application technology disclosed",
+            "severity": "Low",
+            "evidence": "X-Powered-By: ASP.NET",
+            "description": "The response exposes application framework or technology information.",
+            "recommendation": "Disable unnecessary X-Powered-By headers.",
+            "source_module": "security_headers"
+        }
+    ],
+    "modules": {
+        "whois": {
+            "module": "whois_lookup",
+            "status": "success",
+            "data": {
+                "domain_name": "jspmrscoe.edu.in",
+                "registrar": "ERNET India",
+                "whois_server": null,
+                "creation_date": "2018-04-02T09:54:51.166000+00:00",
+                "updated_date": "2020-03-03T11:09:15.986000+00:00",
+                "expiration_date": "2028-04-02T09:54:51.166000+00:00",
+                "domain_age_days": 3049,
+                "name_servers": [
+                    "ns1.dns-parking.com",
+                    "ns2.dns-parking.com"
+                ],
+                "status": [
+                    "ok https://icann.org/epp#ok"
+                ],
+                "dnssec": "unsigned",
+                "registrant_organization": null,
+                "registrant_country": "IN"
+            },
+            "observations": [],
+            "errors": []
+        },
+        "dns": {
+            "module": "dns_lookup",
+            "status": "success",
+            "data": {
+                "hostname": "jspmrscoe.edu.in",
+                "records": {
+                    "A": [
+                        "118.139.164.184"
+                    ],
+                    "AAAA": [],
+                    "MX": [
+                        "1 aspmx.l.google.com",
+                        "10 alt3.aspmx.l.google.com",
+                        "5 alt1.aspmx.l.google.com",
+                        "5 alt2.aspmx.l.google.com",
+                        "10 alt4.aspmx.l.google.com"
+                    ],
+                    "NS": [
+                        "ns1.dns-parking.com",
+                        "ns2.dns-parking.com"
+                    ],
+                    "TXT": [
+                        "MS=ms83511129",
+                        "v=spf1 include:spf.flockmail.com include:spf.mx.hostinger.com include:relay.mailchannels.net ~all"
+                    ],
+                    "CNAME": [],
+                    "SOA": [
+                        "ns1.dns-parking.com. dns.hostinger.com. 2026080601 10000 2400 604800 3600"
+                    ]
+                }
+            },
+            "observations": [],
+            "errors": []
+        },
+        "ip": {
+            "module": "ip_lookup",
+            "status": "success",
+            "data": {
+                "ipv4_addresses": [
+                    "118.139.164.184"
+                ],
+                "ipv6_addresses": [],
+                "results": [
+                    {
+                        "ip_address": "118.139.164.184",
+                        "classification": {
+                            "valid": true,
+                            "version": "IPv4",
+                            "public": true,
+                            "private": false,
+                            "loopback": false,
+                            "link_local": false,
+                            "multicast": false,
+                            "reserved": false
+                        },
+                        "reverse_dns": {
+                            "hostname": "184.164.139.118.host.secureserver.net",
+                            "aliases": [],
+                            "addresses": [
+                                "118.139.164.184"
+                            ]
+                        },
+                        "geolocation": {
+                            "status": "success",
+                            "data": {
+                                "country": "Singapore",
+                                "country_code": "SG",
+                                "region": "Central Singapore",
+                                "city": "Singapore",
+                                "latitude": 1.2899882,
+                                "longitude": 103.850277,
+                                "timezone": "Asia/Singapore",
+                                "asn": 26496,
+                                "organization": "Virtual Private Hosting Service",
+                                "isp": "GoDaddy.com, LLC"
+                            },
+                            "error": null
+                        }
+                    }
+                ]
+            },
+            "observations": [],
+            "errors": []
+        },
+        "http": {
+            "module": "http_headers",
+            "status": "success",
+            "data": {
+                "requested_url": "https://jspmrscoe.edu.in",
+                "final_url": "https://jspmrscoe.edu.in/",
+                "status_code": 200,
+                "reason": "OK",
+                "redirect_count": 0,
+                "redirects": [],
+                "headers": {
+                    "Transfer-Encoding": "chunked",
+                    "Content-Type": "text/html; charset=utf-8",
+                    "Server": "Microsoft-IIS/10.0",
+                    "Strict-Transport-Security": "max-age=2592000",
+                    "X-Powered-By": "ASP.NET",
+                    "Date": "Fri, 07 Aug 2026 16:15:30 GMT"
+                },
+                "server": "Microsoft-IIS/10.0",
+                "x_powered_by": "ASP.NET",
+                "content_type": "text/html; charset=utf-8",
+                "content_length": null,
+                "response_time_ms": 626.14,
+                "https": true
+            },
+            "observations": [],
+            "errors": []
+        },
+        "robots": {
+            "module": "robots_fetcher",
+            "status": "success",
+            "data": {
+                "robots_url": "https://jspmrscoe.edu.in/robots.txt",
+                "final_url": "https://jspmrscoe.edu.in/robots.txt",
+                "status_code": 404,
+                "exists": false,
+                "content_type": null,
+                "content": null,
+                "parsed": {
+                    "user_agents": [],
+                    "disallow_paths": [],
+                    "allow_paths": [],
+                    "sitemaps": []
+                }
+            },
+            "observations": [],
+            "errors": []
+        },
+        "sitemap": {
+            "module": "sitemap_fetcher",
+            "status": "success",
+            "data": {
+                "exists": false,
+                "candidate_results": [
+                    {
+                        "status": "not_found",
+                        "requested_url": "https://jspmrscoe.edu.in/sitemap.xml",
+                        "final_url": "https://jspmrscoe.edu.in/sitemap.xml",
+                        "status_code": 404,
+                        "content_type": null,
+                        "type": null,
+                        "urls": [],
+                        "nested_sitemaps": [],
+                        "error": null
+                    },
+                    {
+                        "status": "not_found",
+                        "requested_url": "https://jspmrscoe.edu.in/sitemap_index.xml",
+                        "final_url": "https://jspmrscoe.edu.in/sitemap_index.xml",
+                        "status_code": 404,
+                        "content_type": null,
+                        "type": null,
+                        "urls": [],
+                        "nested_sitemaps": [],
+                        "error": null
+                    }
+                ],
+                "sitemaps": [],
+                "urls": [],
+                "total_urls": 0
+            },
+            "observations": [],
+            "errors": []
+        },
+        "tls": {
+            "module": "tls_certificate",
+            "status": "success",
+            "data": {
+                "hostname": "jspmrscoe.edu.in",
+                "port": 443,
+                "tls_version": "TLSv1.3",
+                "subject": {
+                    "commonName": "phenixbaylegal.com"
+                },
+                "common_name": "phenixbaylegal.com",
+                "issuer": {
+                    "countryName": "US",
+                    "organizationName": "Let's Encrypt",
+                    "commonName": "YR1"
+                },
+                "subject_alt_names": [
+                    "api.alloy.shardeen.com",
+                    "api.his.shardeen.com",
+                    "his.shardeen.com",
+                    "jspmrscoe.edu.in",
+                    "menonverma.com",
+                    "phenixbaylegal.com",
+                    "shardeen.com",
+                    "www.jspmrscoe.edu.in",
+                    "www.menonverma.com",
+                    "www.phenixbaylegal.com"
+                ],
+                "serial_number": "05AD567FDFD43B2D11E8DB2B07295CD16975",
+                "valid_from": "2026-08-03T06:14:19+00:00",
+                "valid_until": "2026-11-01T06:14:18+00:00",
+                "days_remaining": 85,
+                "certificate_status": "Valid",
+                "certificate_severity": "Informational",
+                "cipher": {
+                    "name": "TLS_AES_256_GCM_SHA384",
+                    "protocol": "TLSv1.3",
+                    "bits": 256
+                }
+            },
+            "observations": [],
+            "errors": []
+        },
+        "security_headers": {
+            "module": "security_headers",
+            "status": "success",
+            "data": {
+                "checked_headers": [
+                    "Content-Security-Policy",
+                    "Strict-Transport-Security",
+                    "X-Frame-Options",
+                    "X-Content-Type-Options",
+                    "Referrer-Policy",
+                    "Permissions-Policy",
+                    "Cross-Origin-Opener-Policy",
+                    "Cross-Origin-Resource-Policy"
+                ],
+                "severity_summary": {
+                    "High": 0,
+                    "Medium": 2,
+                    "Low": 7,
+                    "Informational": 0
+                },
+                "total_observations": 9
+            },
+            "observations": [
+                {
+                    "id": "RF-001",
+                    "title": "Content-Security-Policy header not detected",
+                    "severity": "Medium",
+                    "evidence": "Missing HTTP response header: Content-Security-Policy",
+                    "description": "Helps restrict which scripts, styles, images, and other resources the browser is allowed to load.",
+                    "recommendation": "Implement and test a restrictive Content-Security-Policy."
+                },
+                {
+                    "id": "RF-002",
+                    "title": "X-Frame-Options header not detected",
+                    "severity": "Medium",
+                    "evidence": "Missing HTTP response header: X-Frame-Options",
+                    "description": "Helps prevent the website from being embedded inside unauthorized frames.",
+                    "recommendation": "Set X-Frame-Options to DENY or SAMEORIGIN, or use the CSP frame-ancestors directive."
+                },
+                {
+                    "id": "RF-003",
+                    "title": "X-Content-Type-Options header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: X-Content-Type-Options",
+                    "description": "Prevents browsers from MIME-sniffing content into unexpected file types.",
+                    "recommendation": "Set X-Content-Type-Options to nosniff."
+                },
+                {
+                    "id": "RF-004",
+                    "title": "Referrer-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Referrer-Policy",
+                    "description": "Controls how much referrer information is sent with requests.",
+                    "recommendation": "Configure an appropriate Referrer-Policy such as strict-origin-when-cross-origin."
+                },
+                {
+                    "id": "RF-005",
+                    "title": "Permissions-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Permissions-Policy",
+                    "description": "Controls access to selected browser capabilities and APIs.",
+                    "recommendation": "Define a Permissions-Policy appropriate for the application."
+                },
+                {
+                    "id": "RF-006",
+                    "title": "Cross-Origin-Opener-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Cross-Origin-Opener-Policy",
+                    "description": "Helps isolate the browsing context from cross-origin documents.",
+                    "recommendation": "Consider configuring Cross-Origin-Opener-Policy."
+                },
+                {
+                    "id": "RF-007",
+                    "title": "Cross-Origin-Resource-Policy header not detected",
+                    "severity": "Low",
+                    "evidence": "Missing HTTP response header: Cross-Origin-Resource-Policy",
+                    "description": "Controls whether cross-origin websites can load resources.",
+                    "recommendation": "Consider configuring Cross-Origin-Resource-Policy."
+                },
+                {
+                    "id": "RF-008",
+                    "title": "Server banner exposed",
+                    "severity": "Low",
+                    "evidence": "Server: Microsoft-IIS/10.0",
+                    "description": "The HTTP response exposes information about the web server technology.",
+                    "recommendation": "Minimize unnecessary server product or version information in HTTP response headers."
+                },
+                {
+                    "id": "RF-009",
+                    "title": "Application technology disclosed",
+                    "severity": "Low",
+                    "evidence": "X-Powered-By: ASP.NET",
+                    "description": "The response exposes application framework or technology information.",
+                    "recommendation": "Disable unnecessary X-Powered-By headers."
+                }
+            ],
+            "errors": []
+        }
+    },
+    "limitations": [
+        "ReconForge performs reconnaissance and configuration observations only.",
+        "Results should be manually validated before being treated as confirmed vulnerabilities.",
+        "IP geolocation represents approximate network location and not a precise physical location.",
+        "WHOIS information may be incomplete or redacted by domain registries."
+    ]
+}
