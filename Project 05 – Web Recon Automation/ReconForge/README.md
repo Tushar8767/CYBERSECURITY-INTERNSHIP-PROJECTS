@@ -523,9 +523,8 @@ For PDF generation, a supported local Chromium-based browser such as Microsoft E
 ## Clone the Repository
 
 ```bash
-git [clone It](https://github.com/Tushar8767/CYBERSECURITY-INTERNSHIP-PROJECTS/tree/f40cb3d6be404f19a0e72e45eb637d0a2a523f4b/Project%2005%20%E2%80%93%20Web%20Recon%20Automation/ReconForge)
-cd ReconForge
-```
+git clone [https://github.com/Tushar8767/CYBERSECURITY-INTERNSHIP-PROJECTS.git](https://github.com/Tushar8767/CYBERSECURITY-INTERNSHIP-PROJECTS.git)
+cd "CYBERSECURITY-INTERNSHIP-PROJECTS/Project 05 – Web Recon Automation/ReconForge"
 
 ---
 
