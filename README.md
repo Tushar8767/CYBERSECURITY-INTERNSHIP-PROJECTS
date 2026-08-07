@@ -39,16 +39,21 @@ All security testing and reconnaissance activities were performed only in author
 ```text
 CYBERSECURITY-INTERNSHIP-PROJECTS/
 │
-├── Project 03 – Web Application Security/
+├── project-03-web-app-security/
+|   ├── reports/
+│   ├── screenshorts/
 │
-├── Project 04 – Blue Team/
+├── Project-04-Blue-Team/
+│   ├── application/
+│   ├── exports/
+│   ├── reports/
+│   ├── screenshorts/
+│   └── README.md
 │
 ├── Project 05 – Web Recon Automation/
-│   │
 │   ├── ReconForge/
-│   ├── reports/
 │   ├── ScreenShots/
-│   └── README.md
+│   └── reports/
 │
 └── README.md
 ```
