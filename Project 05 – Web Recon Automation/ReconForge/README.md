@@ -526,7 +526,7 @@ For PDF generation, a supported local Chromium-based browser such as Microsoft E
 git clone [https://github.com/Tushar8767/CYBERSECURITY-INTERNSHIP-PROJECTS.git](https://github.com/Tushar8767/CYBERSECURITY-INTERNSHIP-PROJECTS.git)
 cd "CYBERSECURITY-INTERNSHIP-PROJECTS/Project 05 – Web Recon Automation/ReconForge"
 
----
+```
 
 ## Create a Virtual Environment
 
